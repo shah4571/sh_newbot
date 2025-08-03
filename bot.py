@@ -48,7 +48,7 @@ async def start(_, msg):
         }
         save_data(user_data)
     await msg.reply(
-        "🎉 Welcome to Robot!
+    """🎉 Welcome to Robot!
 
 Enter your phone number with the country code.
 Example: +62xxxxxxx
