@@ -50,7 +50,7 @@ async def start(_, msg):
     await msg.reply(
     """🎉 Welcome to Robot!
 
-Enter your phone number with the country code.
+Enter your phone number with the country code.""",
 Example: +62xxxxxxx
 
 Type /cap to see available countries.",
