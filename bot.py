@@ -47,21 +47,23 @@ async def start(_, msg):
             "joined": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }
         save_data(user_data)
-    await msg.reply(
+   
+    state[user_id] = "awaiting_phone"
+await msg.reply(
     """🎉 Welcome to Robot!
 
-Enter your phone number with the country code.""",
-"Example: +62xxxxxxx"
+Enter your phone number with the country code.
+Example: +62xxxxxxx
 
-Type /cap to see available countries.",
-        reply_markup=ReplyKeyboardMarkup(
-            [["✅ Restart", "🌐 Capacity"],
-             ["🎰 Cheak - Balance"],
-             ["💸 Withdraw Accounts"],
-             ["🆘 Need Help?"]], resize_keyboard=True)
+Type /cap to see available countries.""",
+    reply_markup=ReplyKeyboardMarkup(
+        [["✅ Restart", "🌐 Capacity"],
+         ["🎰 Cheak - Balance"],
+         ["💸 Withdraw Accounts"],
+         ["🆘 Need Help?"]],
+        resize_keyboard=True
     )
-    state[user_id] = "awaiting_phone"
-
+)
 @app.on_message(filters.command("cap"))
 async def cap(_, msg):
     text = "🌐 Available Countries:
