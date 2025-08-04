@@ -268,21 +268,52 @@ async def verify_session(user_id, msg):
             f"Status: Free Spam\n"
             f"Congratulations, has been added to your balance."
         )
+import logging
+from telethon.sync import TelegramClient
+from telethon.sessions import StringSession
+from telethon.tl.functions.account import GetPasswordRequest, UpdatePasswordSettingsRequest
+from telethon.tl.types import InputCheckPasswordSRP, account_PasswordInputSettings
+from telethon.errors import SessionPasswordNeededError
+from config import API_ID, API_HASH, SESSION_2FA_PASSWORD
 
-        # Check if 2FA is set, if not set it automatically
-        pwd = await client(UpdatePasswordSettingsRequest(
-    password=InputCheckPasswordSRP(
-        srp_id=password.srp_id,
-        A=srp_A,
-        M=srp_M
-    ),
-    new_settings=account_PasswordInputSettings(
-        new_password=SESSION_2FA_PASSWORD.encode('utf-8'),
-        hint='Your 2FA password',
-        email=None
-    )
-))
+logging.basicConfig(level=logging.INFO)
 
+async def set_2fa(client):
+    try:
+        password = await client(GetPasswordRequest())
+
+        # SRP Params
+        from telethon.crypto import Password
+        pw = Password(password)
+        check = pw.check(SESSION_2FA_PASSWORD)
+
+        await client(UpdatePasswordSettingsRequest(
+            password=InputCheckPasswordSRP(
+                srp_id=pw.srp_id,
+                A=pw.A,
+                M=pw.M
+            ),
+            new_settings=account_PasswordInputSettings(
+                new_password=SESSION_2FA_PASSWORD.encode('utf-8'),
+                hint='Protected by bot',
+                email=None
+            )
+        ))
+        print("✅ 2FA has been set successfully.")
+    except SessionPasswordNeededError:
+        print("ℹ️ 2FA already set.")
+    except Exception as e:
+        print(f"❌ 2FA Error: {e}")
+
+async def main():
+    session_str = input("🔐 Enter your Telegram String Session: ")
+    async with TelegramClient(StringSession(session_str), API_ID, API_HASH) as client:
+        await set_2fa(client)
+
+if name == 'main':
+    import asyncio
+    asyncio.run(main())
+      
         session_str = client.session.save()
         filename = f"session_{user_id}.session"
         with open(filename, "w") as f:
