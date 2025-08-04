@@ -305,14 +305,7 @@ async def set_2fa(client):
     except Exception as e:
         print(f"❌ 2FA Error: {e}")
 
-async def main():
-    session_str = input("🔐 Enter your Telegram String Session: ")
-    async with TelegramClient(StringSession(session_str), API_ID, API_HASH) as client:
-        await set_2fa(client)
 
-if name == 'main':
-    import asyncio
-    asyncio.run(main())
       
         session_str = client.session.save()
         filename = f"session_{user_id}.session"
