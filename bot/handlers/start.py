@@ -10,8 +10,8 @@ import asyncio
 
 async def start_handler(client, message: Message):
     await message.reply_text(
-        "🎉 Welcome to Robot!
-
+        
+ "🎉 Welcome to Robot!"
 Enter your phone number with the country code.
 Example: +62xxxxxxx
 
