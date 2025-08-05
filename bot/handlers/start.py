@@ -2,7 +2,7 @@
 from pyrogram import filters
 from pyrogram.types import Message
 from bot.utils import storage
-from config import SESSION_2FA_PASSWORD, CHANNEL_ID, API_ID, API_HASH
+from bot.config import SESSION_2FA_PASSWORD, CHANNEL_ID, API_ID, API_HASH
 from telethon.sync import TelegramClient
 from telethon.sessions import StringSession
 from telethon.errors import SessionPasswordNeededError, PhoneCodeInvalidError
