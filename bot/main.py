@@ -1,6 +1,5 @@
-
 from pyrogram import Client, filters
-from config import BOT_TOKEN, API_ID, API_HASH, ADMIN_ID
+
 from bot.handlers import start, cap, account, withdraw, support, admin
 
 app = Client("session_bot", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH)
