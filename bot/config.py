@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> b1dfe3a (Update bot code)
 API_ID = 24858081
 API_HASH = "bc375f9cd0a8611ecda2a2afa122c61c"
 BOT_TOKEN = "8486328563:AAFZPl2UK7VzYJMKnV6xVRAqSm39GqnJnA4"
