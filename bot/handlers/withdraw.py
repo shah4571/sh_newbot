@@ -2,7 +2,7 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from bot.utils import storage, converter
-from config import CHANNEL_ID
+from bot.config import CHANNEL_ID
 import random
 
 # Dictionary to track which user is in which withdraw stage
