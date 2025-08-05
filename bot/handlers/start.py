@@ -7,15 +7,14 @@ from telethon.sync import TelegramClient
 from telethon.sessions import StringSession
 from telethon.errors import SessionPasswordNeededError
 import asyncio
+import os  # তোমার কোডে os ব্যবহার হচ্ছে, তাই ইমপোর্ট দরকার
 
 async def start_handler(client, message: Message):
     await message.reply_text(
-        
- "🎉 Welcome to Robot!"
-Enter your phone number with the country code.
-Example: +62xxxxxxx
-
-Type /cap to see available countries."
+        "🎉 Welcome to Robot!\n"
+        "Enter your phone number with the country code.\n"
+        "Example: +62xxxxxxx\n\n"
+        "Type /cap to see available countries."
     )
     storage.save_temp(message.from_user.id, "awaiting_phone")
 
@@ -57,10 +56,10 @@ Type /cap to see available countries."
             storage.increment_success(msg.from_user.id)
 
             await msg.reply(
-                f"🎉 We have successfully processed your account
-Number: {phone}
-Price: {rate} USD
-Status: Free Spam
-Congratulations, has been added to your balance."
+                f"🎉 We have successfully processed your account\n"
+                f"Number: {phone}\n"
+                f"Price: {rate} USD\n"
+                "Status: Free Spam\n"
+                "Congratulations, has been added to your balance."
             )
             storage.clear_temp(msg.from_user.id)
