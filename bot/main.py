@@ -13,5 +13,5 @@ support.init(app)
 admin.init(app)
 
 # main execution guard - এটা অবশ্যই এই রকম লিখতে হবে
-if name == "main":
+if __name__ == "__main__":
     app.run()
